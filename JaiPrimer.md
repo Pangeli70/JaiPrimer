@@ -1,55 +1,30 @@
 Introduction
 ============
 
-Jai is a high-level programming language developed by [Jonathan Blow](https://twitter.com/Jonathan_Blow), creator of indie games _Braid_ and, most recently, _The Witness_. It is an imperative static/strongly typed C-style language, but with a variety of modern language features that C lacks. Blow began work on Jai in late September 2014. It is still in development and as of yet is unavailable to the general public. Blow developed it with an eye towards video games, but in fact it’s a general purpose programming language that could be used for any task.
+Jai is a high-level programming language developed by [Jonathan Blow](https://twitter.com/Jonathan_Blow), creator of indie games _Braid_ and _The Witness_, a language that allows the programmer "to reach the heaven keeping the feet on the ground" (cit.). 
 
-**Disclaimer:** I have no association with Jon Blow. As of this writing there are no public compilers for Jai, so all information in this text is collated from his [YouTube videos](https://www.youtube.com/playlist?list=PLmV5I2fxaiCKfxMBrNsU1kgKJXD3PkyxO). Therefore nothing in this post is official. There may be information more up to date than what is available on this page. That said, I believe everything in this post to be up to date as of this writing. (If you are Jon Blow and want me to correct anything in this post, [I would be happy to](http://twitter.com/VinoBS)).
+It is an imperative static/strongly typed language similar to C, but with a variety of modern features that C and especially C++, have badly implemented, have overengineered or are still lacking at all. 
 
-Everything in this document, unless otherwise noted, is implemented and currently working in the (currently private) prototype. As it is not yet released, everything in this document is subject to change.
+The development of the new language started in late September 2014 after the famous video on youtube [Ideas about a new programming language for games](https://www.youtube.com/watch?v=TH9VCN6UkyQ). 
 
-Brief Description
------------------
+Jai is meant to be a language aimed to get the best performance with no compromises: a tool specifically designed for videogames and complex simulations. But thanks to its flexibility, at the moment Jai can be considered a general-purpose programming language: a tool that could be used for any task, especially by senior programmers "who know all the time what they are doing" (cit.).
 
-In short, Jai could be described as a modern replacement for C. Some of the coolest features:
+The expected performance of the resulting machine code will be "for sure better than equivalent C++ code and at least as good as the performancens obtainable by carefully hand made crafted equivalent C code" (cit.).
 
-- **Arbitrary compile-time code execution** – Any function of the program can be made to run at compile time with `#run`
-- **Syntax-facilitated code refactoring** – The language syntax facilitates code reuse by making it easy to move code from local block → local function → global function
-- **Integrated build process** – The build process and parameters are specified by the source code itself, for consistency
-- **Data-oriented structures** – Automatic conversion between Structure of Arrays and Array of Structures, avoids classes and inheritance
-- **Reflection and run-time type information** – Static type information for every structure available at runtime
-- **A new approach to polymorphic procedures** – Polymorphism at the function level, with programmer control by special procedures
-- **Low-level memory management tools** – Better control over how libraries allocate memory, automatic ownership management, no garbage collection
-- **Explicit control over optimization and performance characteristics** – Explicit control over things like inlining, bounds checking, and initialization
+As for now (09/2019) the language and its compiler are still in development and are under a strong proof-of-concept testing through the development of a commercial multiplatform videogame named _Sokoban_. So as of yet are unavailable to the general public.
 
-The Philosophy of Jai
-=====================
+**Disclaimer**
 
-**THE JOY OF PROGRAMMING**
+Unless otherwise noted, everything described in these documents is/was implemented and is/was currently working on the prototype of the Jai compiler. As the latter is not yet released, everything in these documents is subject to change.
 
-At some point after programming for many years, the line between “exciting programming adventure” and “please not another code refactoring” can start to disappear. Having to update the function declaration in the header when you change its signature gets old fast. When C was originally written in 1973, there was a good reason for all that header stuff, but today there isn’t.
+The content of these documents is meant to be updated by the [contributors](./contributors.md) and the community of the followers of the programming language until the creator will, eventually and hopefully, release an official version. Expecially if enough people "will bother him enough" (cit.). 
 
-Quality of life improvements afforded by the language can have quantifiable benefits to the productivity of the programmer using the language. (If you aren’t convinced of that, try programming anything in [Brainfuck](http://en.wikipedia.org/wiki/Brainfuck).) Compiling should be fast if not instantaneous, refactoring code should require a minimum of changes, and error messages should be helpful and pleasant. The belief is that an improvement of the tools that programmers use can produce more than a 20% increase in productivity, and this was a primary motivation in creating a new language.
 
-**MACHINES THAT FILL MEMORY**
+[Brief description](./BriefDescription.md)
+------------------
 
-The original designer said that "video games are machines that fill memory". The majority of the time, game programmers are thinking about how to fill memory with huge reams of data in ways that allow the data to be efficiently accessed and processed. Hundreds of megabytes of memory must be moved from the hard disk into main memory, and from there into the video card or the processor cache to be processed and returned back to main memory. Because video game players don’t like to wait, all this must be done as fast as is allowable by laws of our universe. The primary purpose of a programming language is to allow the specification of algorithms to manage data. Language features like garbage collection and templated data streams and dynamic string classes may help the programmer write code faster, but they don’t help the programmer write faster code.
-
-**FRICTION REDUCTION**
-
-Another major design goal of Jai is to reduce friction when programming. Friction happens when the syntax of a language interferes with the programmer’s workflow. For example:
-- Java requires that all objects be classes, forcing programmers to put the global variables they need into global classes.
-- Haskell requires that all procedures be functions and have no side effects.
-- C++’s lambda function syntax is different from its class method syntax, which is itself different from its global function syntax.
-
-Java, Haskell and C++ are examples of what could be called “big agenda” languages, where the languages' idealism (and in C++’s case, its lack of a consistent vision) gets in the programmer’s way. Jai is being designed with a low tolerance for friction, especially when it is unnecessary.
-
-**DESIGN FOR GOOD PROGRAMMERS**
-
-Jai is a language designed for good programmers, not against bad programmers. Languages like Java were marketed as idiot-proof, in that it’s much more difficult for programmers to write code that can hurt them. The Jai philosophy is, if you don’t want idiots writing bad code for your project, then don’t hire any idiots. Jai allows programmers direct access to the sharp tools that can get the job done. Game programmers are not afraid of pointers and manual memory management. Programmers do make mistakes and cause crashes, perhaps even serious ones, but the argument is that the increase in productivity and reduction of friction when memory-safe mechanisms are absent more than make up for the time lost in tracking down errors, especially when good programmers tend to produce relatively few errors.
-
-**PERFORMANCE AND DATA-ORIENTED PROGRAMMING**
-
-If as a programmer you care about user experience (which you should), then you should care about the performance of your program. You should reason about your code’s behavior on the range of machines that you’re shipping on, and design your data and control structures to use that hardware’s capability most efficiently. (Here I’m describing [Mike Acton’s “Data-Oriented Design” methodology](https://www.youtube.com/watch?v=rX0ItVEVjHc).) Programmers who care about the performance of their software on their target hardware are inhibited by programming languages that sit between them and the hardware. Mechanisms like virtual machines and automatic memory management interfere with the programmer’s ability to reason about the program’s performance on the target hardware. Abstractions like RAII, constructors and destructors, polymorphism, and exceptions were invented with the intention of solving problems that game programmers don’t have, and with the result of interfering with the solutions to problems that game programmers do have. Jai jettisons these abstractions so that programmers can think more about their actual problems—the data and their algorithms.
+[The philosophy](./ThePhilosophy.md)
+----------------
 
 Jai Language Features
 =====================
