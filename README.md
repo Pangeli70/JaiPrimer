@@ -1,5 +1,4 @@
 # JaiPrimer
 
-## Contributors
 
-Take a look at the personal bio and disclaimers of some of the [contributors](./contributors)to this primer.
+This repo is a clone copy of the original BsVino's wiki.
